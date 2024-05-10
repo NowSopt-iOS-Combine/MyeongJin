@@ -31,6 +31,12 @@
 		719042752BECE8D600877F50 /* CancelBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719042742BECE8D600877F50 /* CancelBag.swift */; };
 		719042792BECEB1400877F50 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 719042782BECEB1400877F50 /* SnapKit */; };
 		7190427B2BECEB1400877F50 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 7190427A2BECEB1400877F50 /* SnapKit-Dynamic */; };
+		7190427D2BEE182200877F50 /* CustomBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7190427C2BEE182200877F50 /* CustomBottomSheet.swift */; };
+		719042802BEE19A500877F50 /* Publisher+UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7190427F2BEE19A500877F50 /* Publisher+UIControl.swift */; };
+		719042822BEE19FC00877F50 /* Publisher+UIGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719042812BEE19FC00877F50 /* Publisher+UIGesture.swift */; };
+		719042882BEE1B1D00877F50 /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719042872BEE1B1D00877F50 /* NicknameViewController.swift */; };
+		7190428A2BEE1CA900877F50 /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719042892BEE1CA900877F50 /* NicknameView.swift */; };
+		7190428D2BEE21E000877F50 /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7190428C2BEE21E000877F50 /* NicknameViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +81,12 @@
 		7190426F2BECE83C00877F50 /* ButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFactory.swift; sourceTree = "<group>"; };
 		719042722BECE86600877F50 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		719042742BECE8D600877F50 /* CancelBag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelBag.swift; sourceTree = "<group>"; };
+		7190427C2BEE182200877F50 /* CustomBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomSheet.swift; sourceTree = "<group>"; };
+		7190427F2BEE19A500877F50 /* Publisher+UIControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+UIControl.swift"; sourceTree = "<group>"; };
+		719042812BEE19FC00877F50 /* Publisher+UIGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+UIGesture.swift"; sourceTree = "<group>"; };
+		719042872BEE1B1D00877F50 /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
+		719042892BEE1CA900877F50 /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
+		7190428C2BEE21E000877F50 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +180,7 @@
 		719042502BECE69F00877F50 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				7190428B2BEE1CB000877F50 /* NickName */,
 				719042522BECE6B500877F50 /* Login */,
 			);
 			path = Presentation;
@@ -176,6 +189,7 @@
 		719042512BECE6AC00877F50 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				7190427E2BEE197400877F50 /* Combine+UIKit */,
 				719042542BECE70500877F50 /* UIView+.swift */,
 				719042562BECE71C00877F50 /* UITextField.swift */,
 				719042742BECE8D600877F50 /* CancelBag.swift */,
@@ -186,10 +200,9 @@
 		719042522BECE6B500877F50 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				7190425B2BECE75300877F50 /* LoginViewController.swift */,
-				7190425D2BECE76900877F50 /* LoginView.swift */,
-				7190425F2BECE77700877F50 /* LoginViewModel.swift */,
-				719042612BECE79100877F50 /* LoginState.swift */,
+				719042852BEE1AD100877F50 /* ViewModel */,
+				719042842BEE1ACC00877F50 /* View */,
+				719042832BEE1AC300877F50 /* ViewController */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -210,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				719042592BECE73400877F50 /* className.swift */,
+				7190427C2BEE182200877F50 /* CustomBottomSheet.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -230,6 +244,50 @@
 				719042722BECE86600877F50 /* ViewModelType.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		7190427E2BEE197400877F50 /* Combine+UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				7190427F2BEE19A500877F50 /* Publisher+UIControl.swift */,
+				719042812BEE19FC00877F50 /* Publisher+UIGesture.swift */,
+			);
+			path = "Combine+UIKit";
+			sourceTree = "<group>";
+		};
+		719042832BEE1AC300877F50 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7190425B2BECE75300877F50 /* LoginViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		719042842BEE1ACC00877F50 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7190425D2BECE76900877F50 /* LoginView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		719042852BEE1AD100877F50 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				719042612BECE79100877F50 /* LoginState.swift */,
+				7190425F2BECE77700877F50 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7190428B2BEE1CB000877F50 /* NickName */ = {
+			isa = PBXGroup;
+			children = (
+				719042872BEE1B1D00877F50 /* NicknameViewController.swift */,
+				719042892BEE1CA900877F50 /* NicknameView.swift */,
+				7190428C2BEE21E000877F50 /* NicknameViewModel.swift */,
+			);
+			path = NickName;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -375,16 +433,22 @@
 			files = (
 				7190425C2BECE75300877F50 /* LoginViewController.swift in Sources */,
 				719042702BECE83C00877F50 /* ButtonFactory.swift in Sources */,
+				719042882BEE1B1D00877F50 /* NicknameViewController.swift in Sources */,
 				719042552BECE70500877F50 /* UIView+.swift in Sources */,
 				719042572BECE71C00877F50 /* UITextField.swift in Sources */,
 				719042242BECE60A00877F50 /* ViewController.swift in Sources */,
+				7190428A2BEE1CA900877F50 /* NicknameView.swift in Sources */,
 				719042202BECE60A00877F50 /* AppDelegate.swift in Sources */,
+				719042822BEE19FC00877F50 /* Publisher+UIGesture.swift in Sources */,
+				7190428D2BEE21E000877F50 /* NicknameViewModel.swift in Sources */,
 				719042732BECE86600877F50 /* ViewModelType.swift in Sources */,
 				719042622BECE79100877F50 /* LoginState.swift in Sources */,
 				7190426C2BECE81800877F50 /* TextFieldFactory.swift in Sources */,
 				719042222BECE60A00877F50 /* SceneDelegate.swift in Sources */,
 				7190425E2BECE76900877F50 /* LoginView.swift in Sources */,
+				7190427D2BEE182200877F50 /* CustomBottomSheet.swift in Sources */,
 				719042752BECE8D600877F50 /* CancelBag.swift in Sources */,
+				719042802BEE19A500877F50 /* Publisher+UIControl.swift in Sources */,
 				7190426E2BECE82E00877F50 /* LabelFactory.swift in Sources */,
 				7190425A2BECE73400877F50 /* className.swift in Sources */,
 				719042602BECE77700877F50 /* LoginViewModel.swift in Sources */,

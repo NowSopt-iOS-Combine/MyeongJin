@@ -5,8 +5,12 @@
 //  Created by 이명진 on 5/9/24.
 //
 
-import Foundation
+import UIKit
 import Combine
+
+enum FocusType {
+    case id, pw
+}
 
 final class LoginViewModel: ViewModelType {
     
@@ -18,10 +22,13 @@ final class LoginViewModel: ViewModelType {
     struct Input {
         let loginTextField: AnyPublisher<String?, Never>
         let passTextField: AnyPublisher<String?, Never>
+        let focusIdTextField: AnyPublisher<FocusType, Never>
+        let focusPasswordTextField: AnyPublisher<FocusType, Never>
     }
     
     struct Output {
         let validate: AnyPublisher<Bool, Never>
+        let focus: AnyPublisher<FocusType, Never>
     }
     
     func transform(from input: Input, cancelBag: CancelBag) -> Output {
@@ -42,7 +49,13 @@ final class LoginViewModel: ViewModelType {
             .map { $0 && $1 }
             .eraseToAnyPublisher()
         
-        return Output(validate: isFormValidPublisher)
+        let focusPublisher = Publishers.Merge(
+            input.focusIdTextField,
+            input.focusPasswordTextField
+        )
+            .eraseToAnyPublisher()
+        
+        return Output(validate: isFormValidPublisher, focus: focusPublisher)
             
     }
     

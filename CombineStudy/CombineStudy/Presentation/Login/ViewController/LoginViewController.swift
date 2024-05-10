@@ -6,16 +6,12 @@
 //
 
 import UIKit
+import Combine
 import CombineCocoa
 
 final class LoginViewController: UIViewController {
     
     // MARK: - Property
-    
-    private let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-    private let passwordRegex = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{8,}$"
-    
-    var userNickName: String = ""
     
     private var viewModel: LoginViewModel
     private var cancelBag = CancelBag()
@@ -54,18 +50,40 @@ final class LoginViewController: UIViewController {
     // MARK: - Bind
     
     private func bind() {
+        
+        let idTextFieldFocus = rootView.idTextField.didBeginEditingPublisher
+            .map { return FocusType.id }
+            .eraseToAnyPublisher()
+        
+        let pwTextFieldFocus = rootView.passwordTextField.didBeginEditingPublisher
+            .map { return FocusType.pw }
+            .eraseToAnyPublisher()
+        
         let input = LoginViewModel.Input(
             loginTextField: rootView.idTextField.textPublisher,
-            passTextField: rootView.passwordTextField.textPublisher
+            passTextField: rootView.passwordTextField.textPublisher,
+            focusIdTextField: idTextFieldFocus,
+            focusPasswordTextField: pwTextFieldFocus
         )
         
         let output = viewModel.transform(from: input, cancelBag: cancelBag)
         
         output.validate
             .print()
+            .sink(receiveValue: { [unowned self] valid in
+                self.updateButtonStyle(button: self.rootView.loginButton, enabled: valid)
+            }).store(in: cancelBag)
+        
+        output.focus
             .receive(on: RunLoop.main)
-            .assign(to: \.isValid, on: rootView.loginButton)
-            .store(in: cancelBag)
+            .sink { [unowned self] focusType in
+                switch focusType {
+                case .id:
+                    self.focusTextField(rootView.idTextField)
+                case .pw:
+                    self.focusTextField(rootView.passwordTextField)
+                }
+            }.store(in: cancelBag)
     }
     
     // MARK: - @objc Function
@@ -75,9 +93,22 @@ final class LoginViewController: UIViewController {
         print("WelcomeViewController 으로 이동 로직")
     }
     
-    @objc
     private func presentToNicknameBottomSheet() {
-        print("NickNameBottomSheetVC 이 나오는 로직")
+        
+        let contentViewController = NicknameViewController(viewModel: NicknameViewModel())
+        let vc = BottomSheetViewController(
+            bottomType: .middle,
+            contentViewController: contentViewController
+        )
+        
+        contentViewController.namePublisher.sink { [weak self] name in
+            self?.rootView.exampleNameLabel.text = name
+        }.store(in: cancelBag)
+        
+        
+        vc.modalPresentationStyle = .overFullScreen
+        
+        self.present(vc, animated: false)
     }
     
     
@@ -91,6 +122,18 @@ final class LoginViewController: UIViewController {
     private func deletePasswordTapped() {
         rootView.passwordTextField.text = ""
         updateButtonEnable()
+    }
+    
+    private func focusTextField(_ textField: UITextField) {
+        // Apply focus UI
+        textField.layer.borderColor = UIColor.white.cgColor
+        textField.layer.borderWidth = 1
+        
+        // Reset other text fields
+        [rootView.idTextField, rootView.passwordTextField].filter { $0 !== textField }.forEach { otherTextField in
+            otherTextField.layer.borderWidth = 0
+            otherTextField.layer.borderColor = nil
+        }
     }
     
     // MARK: - Methods
@@ -116,8 +159,10 @@ final class LoginViewController: UIViewController {
         rootView.allDeleteButton.addTarget(self, action: #selector(deletePasswordTapped), for: .touchUpInside)
         rootView.togglePasswordButton.addTarget(self, action: #selector(togglePasswordTapped), for: .touchUpInside)
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(presentToNicknameBottomSheet))
-        rootView.makeNickNameLabel.addGestureRecognizer(tapGesture)
+        rootView.makeNickNameLabel.gesture(.tap())
+            .sink { [weak self] _ in
+                self?.presentToNicknameBottomSheet()
+            }.store(in: cancelBag)
     }
     
     private func setDelegate() {
@@ -132,7 +177,6 @@ final class LoginViewController: UIViewController {
 extension LoginViewController: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        //        validateAndToggleLoginButton()
         
         if textField == rootView.passwordTextField {
             if let text = textField.text, text.isEmpty {
@@ -145,31 +189,16 @@ extension LoginViewController: UITextFieldDelegate {
         }
     }
     
-    // 해당 텍스트 필드 강조 코드
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.layer.borderColor = UIColor.white.cgColor
-        textField.layer.borderWidth = 1
-    }
-    
-    // 텍스트 필드 사용 끝나면
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 0
-        textField.layer.borderColor = nil
-    }
-    
+    //    // 해당 텍스트 필드 강조 코드
+    //    func textFieldDidBeginEditing(_ textField: UITextField) {
+    //        textField.layer.borderColor = UIColor.white.cgColor
+    //        textField.layer.borderWidth = 1
+    //    }
+    //
+    //    // 텍스트 필드 사용 끝나면
+    //    func textFieldDidEndEditing(_ textField: UITextField) {
+    //        textField.layer.borderWidth = 0
+    //        textField.layer.borderColor = nil
+    //    }
+    //
 }
-
-extension UIButton {
-    var isValid: Bool {
-        get {
-            backgroundColor == .black
-        }
-        
-        set {
-            setTitleColor(newValue ? .white: .gray2, for: .normal)
-            backgroundColor = newValue ? .tvingRed : .clear
-            isEnabled = newValue
-        }
-    }
-}
-
