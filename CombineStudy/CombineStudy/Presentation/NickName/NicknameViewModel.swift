@@ -28,12 +28,13 @@ final class NicknameViewModel: ViewModelType {
             .map { $0 ?? "" }
             .eraseToAnyPublisher()
         
-        let nickNameModified = input.saveButtonDidTap
+        let nickNameModified = input.saveButtonDidTap // 탭하면 그 순간 부터 결합이 되어버려서 name이 바뀔때마다 계속 호출
             .combineLatest(nickNamePublisher)
             .map { _, name in name }
             .eraseToAnyPublisher()
         
-        let togglePublisher: AnyPublisher<Bool, Never> = nickNamePublisher.map { $0.count > 1 }
+        let togglePublisher: AnyPublisher<Bool, Never> = nickNamePublisher
+            .map { $0.count > 2 }
             .eraseToAnyPublisher()
 
         return Output(

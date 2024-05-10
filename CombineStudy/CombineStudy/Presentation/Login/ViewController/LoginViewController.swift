@@ -102,7 +102,10 @@ final class LoginViewController: UIViewController {
         )
         
         contentViewController.namePublisher.sink { [weak self] name in
-            self?.rootView.exampleNameLabel.text = name
+            if name.count > 2 {
+                self?.rootView.exampleNameLabel.text = name
+            }
+            print(name)
         }.store(in: cancelBag)
         
         

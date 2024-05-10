@@ -68,7 +68,7 @@ final class NicknameViewController: UIViewController {
         let output = viewModel.transform(from: input, cancelBag: cancelBag)
         
         output.nickNameModified
-            .receive(on: RunLoop.main)
+            .debounce(for: 0.5, scheduler: RunLoop.main)
             .sink { [weak self] nickName in
                 self?.nameSubject.send(nickName)
             }.store(in: cancelBag)
