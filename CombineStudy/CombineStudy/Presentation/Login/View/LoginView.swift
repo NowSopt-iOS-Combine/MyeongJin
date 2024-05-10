@@ -121,6 +121,12 @@ final class LoginView: UIView {
         $0.distribution = .equalSpacing
     }
     
+    let exampleNameLabel = UILabel().then {
+        $0.text = "예시"
+        $0.font = .boldSystemFont(ofSize: 24)
+        $0.textColor = .white
+    }
+    
     // MARK: - init
     
     override init(frame: CGRect = .zero) {
@@ -150,7 +156,8 @@ final class LoginView: UIView {
             togglePasswordButton,
             loginButton,
             hStackViewInfoFirst,
-            hStackViewInfoSecond
+            hStackViewInfoSecond,
+            exampleNameLabel
         )
     }
     
@@ -192,6 +199,11 @@ final class LoginView: UIView {
             $0.top.equalTo(hStackViewInfoFirst.snp.bottom).offset(31)
             $0.height.equalTo(22)
             $0.horizontalEdges.equalToSuperview().inset(51)
+        }
+        
+        exampleNameLabel.snp.makeConstraints {
+            $0.top.equalTo(hStackViewInfoSecond.snp.bottom).offset(28)
+            $0.centerX.equalToSuperview()
         }
     }
 }
